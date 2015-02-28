@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja" ng-app="sampleApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Angular Sample</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+    <script src="./js/myscript.js"></script>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .even {
+            background: #ccc;
+        }
+
+        .odd {
+            background: #FF0000;
+        }
+    </style>
+</head>
+<body>
+<h1>train</h1>
+<input type="text" ng-model="inputtext">
+
+<p>hello! {{inputtext}}</p>
+
+<p>hello! {{6 * 29999|number}}</p>
+
+<p>hello! {{6 * 29999|currency}}</p>
+
+<div ng-controller="mainCtrl">
+    <form novalidate name="myForm" ng-submit="addUser()">
+        <p>Name:
+            <input type="text" name="name" ng-model="user.name" required ng-minlength="6" ng-maxlength="12">
+            <span ng-show="myForm.name.$error.required">Required!</span>
+            <span ng-show="myForm.name.$error.minlength">Too short!</span>
+            <span ng-show="myForm.name.$error.maxlength">Too long!</span>
+        </p>
+
+        <p>Score:
+            <input type="number" name="score" ng-model="user.score">
+        </p>
+
+        <p>Email:
+            <input type="email" name="email" ng-model="user.email">
+            <span ng-show="myForm.email.$error.email">Not Valid email!</span>
+        </p>
+
+        <p>Site:
+            <input type="url" name="url" ng-model="user.url">
+            <span ng-show="myForm.url.$error.url">Not Valid url!</span>
+        </p>
+
+        <p>18+:
+            <input type="checkbox" ng-model="user.adult" ng-true-value="'adult'" ng-false-value="'child'">
+        </p>
+
+        <p>Phone:
+            <input type="radio" name="phone" ng-model="user.phone" value="iphone">iphone
+            <input type="radio" name="phone" ng-model="user.phone" value="android">android
+        </p>
+
+        <p>
+            <select ng-model="user.color" ng-options="color for color in ['red','blue','green']"></select>
+        </p>
+
+        <p><input type="submit" value="add"></p>
+    </form>
+    <pre>{{user|json}}</pre>
+
+    <p>{{users.length}} users.</p>
+
+    <p><input type="text" ng-model="query.name"></p>
+    <ul>
+        <li ng-repeat="user in users|filter:query|orderBy:'score'|limitTo: 5" ng-class-even="'even'"
+            ng-class-odd="'odd'" ng-controller="userItemCtrl">
+            {{$index+1}} {{user.name|uppercase}} {{user.score|number:4}}
+            <button ng-click="increment()">+1</button>
+        </li>
+    </ul>
+    <p>{{today|date:'yyyy/MM/dd'}}</p>
+
+</div>
+</body>
+</html>
